@@ -32,6 +32,7 @@ require('lazy').setup({
   "tpope/vim-fugitive",
   'tpope/vim-rhubarb',
   'f-person/git-blame.nvim',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -143,7 +144,7 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    branch ='3.x ',
+    main = "ibl",
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -182,17 +183,30 @@ require('lazy').setup({
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     },
-    config = function()
-      require("plugins.configs.neo-tree")
+    config = function ()
+      require('neo-tree').setup {
+        autochdir = true,
+        update_cwd = true,
+        follow_current_file = true,
+        update_to_buf_dir = {
+          enable = true,
+          auto_open = true,
+        },
+        update_focused_file = {
+          enable = true,
+          update_cwd = true,
+          ignore_list = {},
+        },
+      }
     end,
     keys = {
-    {
-      "<Leader>e",
-      function()
-        require("neo-tree.command").execute({ toggle = true })
-      end,
-    }, -- change or remove this line if relevant.
-  },
+      {
+        "<Leader>e",
+        function()
+          require("neo-tree.command").execute({ toggle = true })
+        end,
+      }, -- change or remove this line if relevant.
+    },
   },
   {
     -- Highlight, edit, and navigate code
@@ -293,6 +307,8 @@ require('telescope').setup {
   },
 }
 
+require('arnoldlei.set')
+require('arnoldlei.remap')
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -323,11 +339,6 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
-  modules = {},
-  sync_install = false,
-  ignore_install = {},
-  parser_install_dir = nil,
-
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
   modules = {},
@@ -384,8 +395,8 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', '<leader>df', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>dq', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
@@ -534,5 +545,3 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-require('arnoldlei.set')
-require('arnoldlei.remap')
