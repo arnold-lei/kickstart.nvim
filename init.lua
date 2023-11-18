@@ -144,11 +144,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    main = "ibl",
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main="ibl",
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
@@ -173,6 +170,9 @@ require('lazy').setup({
           return vim.fn.executable 'make' == 1
         end,
       },
+    },
+    defaults = {
+      vimgrep_arguments = { 'rg',},
     },
   },
   {
@@ -429,7 +429,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
