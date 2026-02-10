@@ -50,9 +50,8 @@ vim.keymap.set('n', '<leader>mr', '<cmd>CellularAutomaton make_it_rain<CR>')
 
 vim.keymap.set('n', '<leader>sf', ':source $HOME/.config/nvim/init.lua <CR>', { desc = 'Source Neovim config' })
 
-vim.keymap.set('n', '<leader><leader>', function()
-  vim.cmd 'so'
-end)
+-- Removed <leader><leader> mapping to avoid conflict with Telescope live_grep in init.lua
+-- Use <leader>sf to source config instead
 
 -- Jump to beginning/end of method
 vim.keymap.set('n', '[m', '[m', { desc = 'Jump to beginning of method' })

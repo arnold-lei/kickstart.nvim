@@ -19,22 +19,6 @@
 ========                                                     ========
 =====================================================================
 =====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
 
 What is Kickstart?
 
@@ -118,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -149,6 +133,19 @@ vim.o.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
+
+-- Automatically reload files when changed outside of Neovim
+vim.o.autoread = true
+
+-- Trigger checktime when switching buffers, focusing window, or after cursor hold
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+  pattern = '*',
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end,
+})
 
 -- Decrease mapped sequence wait time
 vim.o.timeoutlen = 300
@@ -437,35 +434,55 @@ require('lazy').setup({
             hidden = true,
             -- Include .env.local files even if they're gitignored
             find_command = {
-              'rg', '--files', '--hidden', '--no-ignore-vcs',
-              '--glob', '!.git/*',
-              '--glob', '!node_modules/*',
-              '--glob', '!.next/*',
-              '--glob', '!dist/*',
-              '--glob', '!build/*',
+              'rg',
+              '--files',
+              '--hidden',
+              '--no-ignore-vcs',
+              '--glob',
+              '!.git/*',
+              '--glob',
+              '!node_modules/*',
+              '--glob',
+              '!.next/*',
+              '--glob',
+              '!dist/*',
+              '--glob',
+              '!build/*',
             },
           },
           live_grep = {
             additional_args = function()
               return {
-                '--hidden', '--no-ignore-vcs',
-                '--glob', '!.git/*',
-                '--glob', '!node_modules/*',
-                '--glob', '!.next/*',
-                '--glob', '!dist/*',
-                '--glob', '!build/*',
+                '--hidden',
+                '--no-ignore-vcs',
+                '--glob',
+                '!.git/*',
+                '--glob',
+                '!node_modules/*',
+                '--glob',
+                '!.next/*',
+                '--glob',
+                '!dist/*',
+                '--glob',
+                '!build/*',
               }
             end,
           },
           grep_string = {
             additional_args = function()
               return {
-                '--hidden', '--no-ignore-vcs',
-                '--glob', '!.git/*',
-                '--glob', '!node_modules/*',
-                '--glob', '!.next/*',
-                '--glob', '!dist/*',
-                '--glob', '!build/*',
+                '--hidden',
+                '--no-ignore-vcs',
+                '--glob',
+                '!.git/*',
+                '--glob',
+                '!node_modules/*',
+                '--glob',
+                '!.next/*',
+                '--glob',
+                '!dist/*',
+                '--glob',
+                '!build/*',
               }
             end,
           },
@@ -876,9 +893,9 @@ require('lazy').setup({
         function()
           vim.g.disable_autoformat = not vim.g.disable_autoformat
           if vim.g.disable_autoformat then
-            print('Autoformat disabled')
+            print 'Autoformat disabled'
           else
-            print('Autoformat enabled')
+            print 'Autoformat enabled'
           end
         end,
         mode = '',
@@ -1077,7 +1094,23 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'vue', 'javascript', 'typescript', 'css' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'vue',
+        'javascript',
+        'typescript',
+        'css',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

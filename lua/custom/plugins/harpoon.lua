@@ -9,7 +9,6 @@ return {
     local harpoon = require 'harpoon'
     harpoon:setup()
 
-    -- Keymaps
     vim.keymap.set('n', '<leader>a', function()
       harpoon:list():add()
     end, { desc = 'Harpoon: Mark file' })
