@@ -7,6 +7,7 @@ return {
     { '<leader>ct', mode = 'n', desc = 'Open Arnie Bot terminal' },
     { '<leader>cd', mode = 'n', desc = 'Dismiss Arnie Bot response' },
     { '<leader>cx', mode = 'n', desc = 'Cancel Arnie Bot request' },
+    { '<leader>cs', mode = 'n', desc = 'Browse Arnie Bot sessions' },
   },
   opts = {
     keymaps = {
